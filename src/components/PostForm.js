@@ -1,25 +1,20 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-class PostForm extends Component {
-  constructor(props) {
-    super(props);
+function PostForm() {
+  const [post, setPost] = useState({});
+  const [userId, setUserId] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
-    this.state = {
-      userId: "",
-      title: "",
-      body: "",
-    };
-  }
-
-  changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  const changeHandler = (e) => {
+    e.target.name = e.target.value;
   };
 
-  submitHandler = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post("https://jsonplaceholder.typicode.com/posts", this.state)
+      .post("https://jsonplaceholder.typicode.com/posts", post)
       .then((response) => {
         alert("Data posted successfully");
       })
@@ -28,40 +23,37 @@ class PostForm extends Component {
       });
   };
 
-  render() {
-    const { userId, title, body } = this.state;
-    return (
-      <div>
-        <form onSubmit={this.submitHandler}>
-          <div>
-            <input
-              type="text"
-              name="userId"
-              value={userId}
-              onChange={this.changeHandler}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="title"
-              value={title}
-              onChange={this.changeHandler}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="body"
-              value={body}
-              onChange={this.changeHandler}
-            />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <form onSubmit={submitHandler}>
+        <div>
+          <input
+            type="text"
+            name="userId"
+            value={userId}
+            onChange={changeHandler}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="title"
+            value={title}
+            onChange={changeHandler}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="body"
+            value={body}
+            onChange={changeHandler}
+          />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
 
 export default PostForm;
