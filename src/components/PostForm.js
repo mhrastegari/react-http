@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 function PostForm() {
@@ -7,16 +7,12 @@ function PostForm() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  const changeHandler = (e) => {
-    e.target.name = e.target.value;
-  };
-
   const submitHandler = (e) => {
     e.preventDefault();
     axios
       .post("https://jsonplaceholder.typicode.com/posts", post)
       .then((response) => {
-        alert("Data posted successfully");
+        alert(`${title} posted successfully`);
       })
       .catch((error) => {
         alert("Error posting data");
@@ -31,7 +27,7 @@ function PostForm() {
             type="text"
             name="userId"
             value={userId}
-            onChange={changeHandler}
+            onChange={(e) => setUserId(e.target.value)}
           />
         </div>
         <div>
@@ -39,7 +35,7 @@ function PostForm() {
             type="text"
             name="title"
             value={title}
-            onChange={changeHandler}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div>
@@ -47,7 +43,7 @@ function PostForm() {
             type="text"
             name="body"
             value={body}
-            onChange={changeHandler}
+            onChange={(e) => setBody(e.target.value)}
           />
         </div>
         <button type="submit">Submit</button>
